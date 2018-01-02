@@ -73,6 +73,8 @@ if (process.argv.includes('--hotOnly')) {
         }
     )
 } else {
+    options.output.publicPath = '//cdn.safish.org/trip/'
+
     options.plugins.push(
         new extractTextPlugin({
             filename: 'index.[hash:4].css',
