@@ -1,0 +1,45 @@
+{
+"frames": {
+	"01.png": {
+		"frame": {"x":0, "y":0, "w":467, "h":169},
+		"spriteSourceSize": {"x":0,"y":0,"w":467,"h":169},
+		"sourceSize": {"w":467,"h":169}
+	},
+	"02.png": {
+		"frame": {"x":0, "y":378, "w":30, "h":30},
+		"spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
+		"sourceSize": {"w":30,"h":30}
+	},
+	"03.png": {
+		"frame": {"x":0, "y":170, "w":113, "h":32},
+		"spriteSourceSize": {"x":0,"y":0,"w":113,"h":32},
+		"sourceSize": {"w":113,"h":32}
+	},
+	"04.png": {
+		"frame": {"x":0, "y":203, "w":87, "h":21},
+		"spriteSourceSize": {"x":0,"y":0,"w":87,"h":21},
+		"sourceSize": {"w":87,"h":21}
+	},
+	"05.png": {
+		"frame": {"x":0, "y":278, "w":40, "h":99},
+		"spriteSourceSize": {"x":0,"y":0,"w":40,"h":99},
+		"sourceSize": {"w":40,"h":99}
+	},
+	"06.png": {
+		"frame": {"x":41, "y":278, "w":36, "h":94},
+		"spriteSourceSize": {"x":0,"y":0,"w":36,"h":94},
+		"sourceSize": {"w":36,"h":94}
+	},
+	"07.png": {
+		"frame": {"x":0, "y":225, "w":75, "h":52},
+		"spriteSourceSize": {"x":0,"y":0,"w":75,"h":52},
+		"sourceSize": {"w":75,"h":52}
+	}
+
+},
+"meta": {
+	"image": "tram.png",
+	"size": {"w": 468, "h": 409},
+	"scale": "1"
+}
+}
