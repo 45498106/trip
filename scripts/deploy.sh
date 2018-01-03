@@ -1,8 +1,6 @@
 set -e
 rm -fr dist
 npm run build
-cd dist
-cp -r ../src/assets .
 git init
 git add .
 git commit -m 'Auto deploy to github-pages'
