@@ -3,7 +3,7 @@ export default class Tram extends PIXI.Sprite {
     constructor(...args) {
         super(...args)
 
-        this.speed = 5
+        this.speed = 8
         this.velocity = 0
         this.acceleration = 0
 
@@ -62,7 +62,11 @@ export default class Tram extends PIXI.Sprite {
                 if (this.velocity < 0) wheel.rotation -= Math.PI / 30
                 wheel.rotation %= global.util.PI2
             })
+
             this.x += this.velocity
+
+            if (this === global.camera.target) global.camera.track()
+
         })
     }
 
