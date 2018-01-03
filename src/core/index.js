@@ -1,30 +1,33 @@
-import * as pixi from 'pixi.js'
 import './util'
+import Camera from './camera'
 import Tram from './tram'
+import Layer from './layer'
 
-global.wait = {}
-global.setting = {
-    width: 1920,
-    height: 1080,
-    ratio: window.devicePixelRatio || 1
-}
-
-global.game = new pixi.Application({
+global.game = new PIXI.Application({
     width: window.innerWidth,
     height: window.innerHeight,
     backgroundColor: 0xffffff,
     view: document.querySelector('canvas')
 })
 
+
 loadRes().then(() => {
     global.game.stage.addChild(
-        new pixi.extras.TilingSprite(
+        new PIXI.extras.TilingSprite(
             global.resource.bkg.texture,
-            global.setting.width,
-            global.setting.height
+            global.util.setting.width,
+            global.util.setting.height
         )
     )
-    global.tram = new Tram().setPosition(global.setting.width >> 1, global.setting.height >> 1)
+    global.camera = new Camera()
+
+    global.layer = new Layer()
+
+    global.tram = new Tram(global.resource.tram.textures['01.png'])
+    global.tram.position.set(667, 480)
+    global.layer.children[1].addChild(global.tram)
+    global.camera.addChild(global.layer)
+    global.camera.follow(global.tram)
 })
 
 
@@ -34,6 +37,8 @@ function loadRes() {
         global.game.loader
             .add('tram', `${prefix}/assets/sprites/tram.json`)
             .add('bkg', `${prefix}/assets/sprites/paper.png`)
+            .add('mountain', `${prefix}/assets/sprites/terrain/02.png`)
+            .add('house', `${prefix}/assets/sprites/depot/01.png`)
             .load((loader, resource) => {
                 global.resource = resource
                 resolve()
@@ -45,8 +50,8 @@ resize()
 window.addEventListener('resize', resize)
 
 function resize() {
-    if (global.wait.resize) return
-    global.wait.resize = true
+    if (global.util.wait.resize) return
+    global.util.wait.resize = true
     setTimeout(() => {
         let width, height
         if (window.innerWidth <= window.innerHeight) {
@@ -57,22 +62,23 @@ function resize() {
             width = window.innerWidth
             height = window.innerHeight
         }
-        global.wait.resize = false
-        global.setting.ratio = window.devicePixelRatio || 1
+        global.util.wait.resize = false
+        global.util.setting.ratio = window.devicePixelRatio || 1
+
 
         global.game.view.style.width = `${width}px`
         global.game.view.style.height = `${height}px`
         global.game.view.style.top = `${(window.innerHeight - height) * .5}px`
         global.game.view.style.left = `${(window.innerWidth - width) * .5}px`
-        global.game.renderer.resize(width * global.setting.ratio, height * global.setting.ratio)
+        global.game.renderer.resize(width * global.util.setting.ratio,
+            height * global.util.setting.ratio)
+
+        global.util.view.width = global.game.view.width
+        global.util.view.height = global.game.view.height
 
         // stage 偏移
         global.game.stage.scale.set(global.util.ratio)
-        global.game.stage.x =
-            (global.game.view.width - global.setting.width * global.util.ratio) * .5
-        global.game.stage.y =
-            (global.game.view.height - global.setting.height * global.util.ratio) * .5
-    })
+    }, 100)
 }
 
 /* 额外扩展 */

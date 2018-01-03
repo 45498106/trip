@@ -1,3 +1,4 @@
+import 'pixi.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.less'
 import core from '../core'
