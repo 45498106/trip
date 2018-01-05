@@ -12,17 +12,15 @@ export default class Camera extends PIXI.Container {
         this.target = target
     }
 
-    track() {
+    track(t) {
         const point = this.target.getGlobalPosition()
-        point.x = ~~(global.util.view.width * .5 - point.x)
-        point.y = ~~(global.util.view.height * .5 - point.y)
-        this.x += point.x
-        this.y += point.y
+        this.x += ~~(global.util.view.width * .5 - point.x) * t
+        this.y += ~~(global.util.view.height * .5 - point.y) * t
     }
 
     update() {
         global.game.ticker.add(t => {
-            this.target && this.track()
+            this.target && this.track(.1)
             this.x > 0 ? this.x = 0 : null
         })
     }

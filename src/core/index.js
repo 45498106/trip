@@ -61,6 +61,7 @@ function resize() {
         } else {
             width = window.innerWidth
             height = window.innerHeight
+            global.rotation = 0
         }
         global.util.wait.resize = false
         global.util.setting.ratio = window.devicePixelRatio || 1
