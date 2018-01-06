@@ -74,9 +74,6 @@ function resize() {
         global.game.renderer.resize(width * global.util.setting.ratio,
             height * global.util.setting.ratio)
 
-        global.util.view.width = global.game.view.width
-        global.util.view.height = global.game.view.height
-
         // stage 偏移
         global.game.stage.scale.set(global.util.ratio)
     }, 100)

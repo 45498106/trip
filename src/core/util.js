@@ -14,11 +14,6 @@ global.util = {
         width: 1334,
         height: 750,
         ratio: window.devicePixelRatio || 1
-    },
-
-    view: {
-        width: 0,
-        height: 0
     }
 }
 
