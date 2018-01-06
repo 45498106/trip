@@ -1,4 +1,3 @@
-
 export default class Layer extends PIXI.Container {
     constructor() {
         super()
@@ -17,8 +16,8 @@ export default class Layer extends PIXI.Container {
 
     setup() {
         const things = [
-            new PIXI.Sprite(global.resource.mountain.texture),
-            new PIXI.Sprite(global.resource.house.texture)
+            new PIXI.Sprite(global.resource.terrain.textures['terrain.15.png']),
+            new PIXI.Sprite(global.resource.depot.textures['depot.11.png'])
         ]
         // things[1].drag()
         things[1].position.set(180, 300)

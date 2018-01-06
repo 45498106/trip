@@ -1,4 +1,3 @@
-
 const {max, abs} = Math
 
 export default class Camera extends PIXI.Container {
@@ -48,7 +47,7 @@ export default class Camera extends PIXI.Container {
     }
 
     update() {
-        global.game.ticker.add(t => {
+        global.game.ticker.add(() => {
             this.target && this.track()
             this.x > 0 ? this.x = 0 : null
         })

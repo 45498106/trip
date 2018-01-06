@@ -74,14 +74,16 @@ if (process.argv.includes('--hotOnly')) {
     )
 } else {
     options.output.publicPath = '//cdn.safish.org/trip/'
+    options.output.filename = '[name].[chunkhash:4].js'
 
     options.plugins.push(
         new extractTextPlugin({
-            filename: 'index.[hash:4].css',
+            filename: 'index.[chunkhash:4].css',
             allChunks: true
         }),
         new webpack.DefinePlugin({
-            ver: JSON.stringify('production')
+            ver: JSON.stringify('production'),
+            hash: JSON.stringify(~~(Date.now() / 1000))
         })
     )
 

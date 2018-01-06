@@ -1,7 +1,7 @@
 import 'pixi.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.less'
-import core from '../core'
+import '../core/index.js'
 
 document.addEventListener('contextmenu', event => {
     event.preventDefault()

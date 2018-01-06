@@ -1,17 +1,16 @@
-
 export default class Tram extends PIXI.Sprite {
     constructor(...args) {
         super(...args)
 
-        this.speed = 8
+        this.speed = 10
         this.velocity = 0
         this.acceleration = 0
 
         this.anchor.set(.5)
 
         this.doors = [
-            new PIXI.Sprite(global.resource.tram.textures['05.png']),
-            new PIXI.Sprite(global.resource.tram.textures['05.png'])
+            new PIXI.Sprite(global.resource.tram.textures['tram.6.png']),
+            new PIXI.Sprite(global.resource.tram.textures['tram.6.png'])
         ]
         this.doors[0].anchor.set(.5)
         this.doors[1].anchor.set(.5)
@@ -22,8 +21,8 @@ export default class Tram extends PIXI.Sprite {
         this.addChild(...this.doors)
 
         this.axles = [
-            new PIXI.Sprite(global.resource.tram.textures['03.png']),
-            new PIXI.Sprite(global.resource.tram.textures['03.png'])
+            new PIXI.Sprite(global.resource.tram.textures['tram.3.png']),
+            new PIXI.Sprite(global.resource.tram.textures['tram.3.png'])
         ]
         this.axles[0].anchor.set(.5)
         this.axles[1].anchor.set(.5)
@@ -31,10 +30,10 @@ export default class Tram extends PIXI.Sprite {
         this.axles[1].position.set(130, 82)
 
         this.wheels = [
-            new PIXI.Sprite(global.resource.tram.textures['02.png']),
-            new PIXI.Sprite(global.resource.tram.textures['02.png']),
-            new PIXI.Sprite(global.resource.tram.textures['02.png']),
-            new PIXI.Sprite(global.resource.tram.textures['02.png'])
+            new PIXI.Sprite(global.resource.tram.textures['tram.2.png']),
+            new PIXI.Sprite(global.resource.tram.textures['tram.2.png']),
+            new PIXI.Sprite(global.resource.tram.textures['tram.2.png']),
+            new PIXI.Sprite(global.resource.tram.textures['tram.2.png'])
         ]
         this.wheels[0].anchor.set(.5)
         this.wheels[1].anchor.set(.5)

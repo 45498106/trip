@@ -1,7 +1,7 @@
-import './util'
-import Camera from './camera'
-import Tram from './tram'
-import Layer from './layer'
+import './util.js'
+import Camera from './camera.js'
+import Tram from './tram.js'
+import Layer from './layer.js'
 
 global.game = new PIXI.Application({
     width: window.innerWidth,
@@ -14,7 +14,7 @@ global.game = new PIXI.Application({
 loadRes().then(() => {
     global.game.stage.addChild(
         new PIXI.extras.TilingSprite(
-            global.resource.bkg.texture,
+            global.resource.paper.texture,
             global.util.setting.width,
             global.util.setting.height
         )
@@ -23,7 +23,7 @@ loadRes().then(() => {
 
     global.layer = new Layer()
 
-    global.tram = new Tram(global.resource.tram.textures['01.png'])
+    global.tram = new Tram(global.resource.tram.textures['tram.1.png'])
     global.tram.position.set(667, 480)
     global.layer.children[1].addChild(global.tram)
     global.camera.addChild(global.layer)
@@ -35,10 +35,10 @@ function loadRes() {
     return new Promise(resolve => {
         const prefix = ver === 'production' ? '//cdn.safish.org/trip' : './src'
         global.game.loader
-            .add('tram', `${prefix}/assets/sprites/tram.json`)
-            .add('bkg', `${prefix}/assets/sprites/paper.png`)
-            .add('mountain', `${prefix}/assets/sprites/terrain/02.png`)
-            .add('house', `${prefix}/assets/sprites/depot/01.png`)
+            .add('paper', `${prefix}/assets/sprites/paper.png?${hash}`)
+            .add('tram', `${prefix}/assets/sprites/tram.json?${hash}`)
+            .add('terrain', `${prefix}/assets/sprites/terrain.json?${hash}`)
+            .add('depot', `${prefix}/assets/sprites/depot.json?${hash}`)
             .load((loader, resource) => {
                 global.resource = resource
                 resolve()
