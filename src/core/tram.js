@@ -2,7 +2,7 @@ export default class Tram extends PIXI.Sprite {
     constructor(...args) {
         super(...args)
 
-        this.speed = 10
+        this.speed = 5
         this.velocity = 0
         this.acceleration = 0
 
@@ -57,8 +57,20 @@ export default class Tram extends PIXI.Sprite {
     update() {
         global.game.ticker.add(() => {
             this.wheels.forEach(wheel => {
-                if (this.velocity > 0) wheel.rotation += Math.PI / 30
-                if (this.velocity < 0) wheel.rotation -= Math.PI / 30
+                if (this.velocity > 0) {
+                    wheel.rotation += Math.PI / 30
+                    if (global.camera.distance.x > -200 &&
+                        global.camera.target === this) {
+                        global.camera.distance.x--
+                    }
+
+                } else if (this.velocity < 0) {
+                    wheel.rotation -= Math.PI / 30
+                    if (global.camera.distance.x < 200 &&
+                        global.camera.target === this) {
+                        global.camera.distance.x++
+                    }
+                }
                 wheel.rotation %= global.util.PI2
             })
             this.x += this.velocity
@@ -97,18 +109,29 @@ export default class Tram extends PIXI.Sprite {
             }
         })
 
-        global.game.stage.interactive = true
-        global.game.stage
-            .on('pointerdown', event => {
-                if (event.data.global.x > global.game.view.width >> 1) {
-                    this.velocity = this.speed
-                } else {
-                    this.velocity = -this.speed
-                }
-            })
-            .on('pointerup', event => {
-                this.velocity = 0
-            })
+        // global.game.stage.interactive = true
+        // global.game.stage
+        //     .on('pointerdown', event => {
+        //         if (event.data.global.x > global.game.view.width >> 1) {
+        //             this.velocity = this.speed
+        //         } else {
+        //             this.velocity = -this.speed
+        //         }
+        //     })
+        //     .on('pointerup', event => {
+        //         this.velocity = 0
+        //     })
+
+        document.addEventListener('touchstart', event => {
+            if (event.touches.item(0).pageX > window.innerWidth >> 1) {
+                this.velocity = this.speed
+            } else {
+                this.velocity = -this.speed
+            }
+        })
+        document.addEventListener('touchend', event => {
+            this.velocity = 0
+        })
     }
 }
 

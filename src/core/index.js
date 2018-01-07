@@ -2,6 +2,7 @@ import './util.js'
 import Camera from './camera.js'
 import Tram from './tram.js'
 import Layer from './layer.js'
+import physics from './physics.js'
 
 global.game = new PIXI.Application({
     width: window.innerWidth,
@@ -12,18 +13,10 @@ global.game = new PIXI.Application({
 
 
 loadRes().then(() => {
-    global.game.stage.addChild(
-        new PIXI.extras.TilingSprite(
-            global.resource.paper.texture,
-            global.util.setting.width,
-            global.util.setting.height
-        )
-    )
     global.camera = new Camera()
-
     global.layer = new Layer()
-
     global.tram = new Tram(global.resource.tram.textures['tram.1.png'])
+    global.tram.alpha = 0
     global.tram.position.set(667, 480)
     global.layer.children[1].addChild(global.tram)
     global.camera.addChild(global.layer)
@@ -39,6 +32,8 @@ function loadRes() {
             .add('tram', `${prefix}/assets/sprites/tram.json?${hash}`)
             .add('terrain', `${prefix}/assets/sprites/terrain.json?${hash}`)
             .add('depot', `${prefix}/assets/sprites/depot.json?${hash}`)
+            .add('tree', `${prefix}/assets/sprites/tree.json?${hash}`)
+            .add('misc', `${prefix}/assets/sprites/misc.json?${hash}`)
             .load((loader, resource) => {
                 global.resource = resource
                 resolve()
@@ -73,6 +68,10 @@ function resize() {
         global.game.view.style.left = `${(window.innerWidth - width) * .5}px`
         global.game.renderer.resize(width * global.util.setting.ratio,
             height * global.util.setting.ratio)
+
+        if (global.paper) {
+            global.paper.scale.set(1 / global.util.ratio)
+        }
 
         // stage 偏移
         global.game.stage.scale.set(global.util.ratio)

@@ -58,7 +58,8 @@ if (process.argv.includes('--hotOnly')) {
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
-            ver: JSON.stringify('dev')
+            ver: JSON.stringify('dev'),
+            hash: JSON.stringify('hash')
         })
     )
 
