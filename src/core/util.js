@@ -14,6 +14,10 @@ global.util = {
         width: 1334,
         height: 750,
         ratio: window.devicePixelRatio || 1
+    },
+
+    lerp(from, to, t) {
+        return (to - from) * t + from
     }
 }
 

@@ -16,7 +16,7 @@ loadRes().then(() => {
     global.camera = new Camera()
     global.layer = new Layer()
     global.tram = new Tram(global.resource.tram.textures['tram.1.png'])
-    global.tram.alpha = 0
+    // global.tram.alpha = 0
     global.tram.position.set(667, 480)
     global.layer.children[1].addChild(global.tram)
     global.camera.addChild(global.layer)

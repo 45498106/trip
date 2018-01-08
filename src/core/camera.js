@@ -28,8 +28,10 @@ export default class Camera extends PIXI.Container {
     }
 
     setDistance(x, y) {
-        this.distance.x = x === undefined ? this.distance.x : x
-        this.distance.y = y === undefined ? this.distance.y : y
+        x = x === undefined ? this.distance.x : x
+        y = y === undefined ? this.distance.y : y
+        this.distance.x = x
+        this.distance.y = y
     }
 
     track() {
