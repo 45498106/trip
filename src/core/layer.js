@@ -25,20 +25,22 @@ export default class Layer extends PIXI.Container {
 
         background.sort(cmp).forEach(item => {
             const sprite = new PIXI.Sprite(item.texture)
-            sprite.alpha = item.alpha
             sprite.config = item
+            sprite.alpha = item.alpha
+            sprite.rotation = item.rotation
             sprite.position.set(item.x, item.y)
-            sprite.scale.set(item.scale)
+            sprite.scale.set(item.scale.x, item.scale.y)
             item.drag && sprite.drag()
             this.layers[0].addChild(sprite)
         })
 
         foreground.sort(cmp).forEach(item => {
             const sprite = new PIXI.Sprite(item.texture)
-            sprite.alpha = item.alpha
             sprite.config = item
+            sprite.alpha = item.alpha
+            sprite.rotation = item.rotation
             sprite.position.set(item.x, item.y)
-            sprite.scale.set(item.scale)
+            sprite.scale.set(item.scale.x, item.scale.y)
             item.drag && sprite.drag()
             this.layers[2].addChild(sprite)
         })

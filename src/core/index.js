@@ -22,6 +22,7 @@ loadRes().then(() => {
     global.tram.position.set(667, 480)
     global.layer.children[1].addChild(global.tram)
     global.camera.addChild(global.layer, new Test())
+    // global.camera.position.set(-2278, -360)
     global.camera.follow(global.tram)
 })
 

@@ -15,6 +15,7 @@ export default class Camera extends PIXI.Container {
         global.game.stage.addChild(this)
 
         this.update()
+        // this.listen()
     }
 
     follow(target) {
@@ -69,6 +70,32 @@ export default class Camera extends PIXI.Container {
         global.game.ticker.add(() => {
             this.target && this.track()
             this.x > 0 ? this.x = 0 : null
+        })
+    }
+
+    listen() {
+        window.addEventListener('keydown', event => {
+            switch (event.keyCode) {
+                case 37: {
+                    this.x += 8
+                    break
+                }
+
+                case 39: {
+                    this.x -= 8
+                    break
+                }
+
+                case 38: {
+                    this.y += 8
+                    break
+                }
+
+                case 40: {
+                    this.y -= 8
+                    break
+                }
+            }
         })
     }
 }

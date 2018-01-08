@@ -43,10 +43,24 @@ PIXI.DisplayObject.prototype.enable = function() {
     body.lastPostion = body.getPosition().clone()
     body.createFixture(
         planck.Box(this.width * .5 * step, this.height * .5 * step),
-        {
-            density: 1
-        }
+        {density: 1}
     )
-
     return body
+}
+
+planck.Body.prototype.clearShapes = function() {
+    for (let fixture = this.getFixtureList(); fixture; fixture = fixture.getNext()) {
+        this.destroyFixture(fixture)
+    }
+    return this
+}
+
+planck.Body.prototype.loadPolygon = function(path, fixtureDef={}) {
+    path.forEach(vertexs => {
+        this.createFixture(
+            planck.Polygon(vertexs.map(vertex => planck.Vec2(vertex[0] / ptm, vertex[1] / ptm))),
+            {density: 1, ...fixtureDef}
+        )
+    })
+    return this
 }

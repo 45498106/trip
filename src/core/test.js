@@ -26,6 +26,6 @@ export default class Test extends PIXI.Container {
         b.position.set(300, 700)
         b.enable().setStatic()
 
-        this.addChild(ground, a, b)
+        // this.addChild(ground, a, b)
     }
 }
