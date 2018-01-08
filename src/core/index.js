@@ -4,6 +4,8 @@ import Tram from './tram.js'
 import Layer from './layer.js'
 import physics from './physics.js'
 
+import Test from './test.js'
+
 global.game = new PIXI.Application({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -16,10 +18,10 @@ loadRes().then(() => {
     global.camera = new Camera()
     global.layer = new Layer()
     global.tram = new Tram(global.resource.tram.textures['tram.1.png'])
-    // global.tram.alpha = 0
+    global.tram.alpha = 0
     global.tram.position.set(667, 480)
     global.layer.children[1].addChild(global.tram)
-    global.camera.addChild(global.layer)
+    global.camera.addChild(global.layer, new Test())
     global.camera.follow(global.tram)
 })
 
