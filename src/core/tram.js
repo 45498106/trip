@@ -59,18 +59,17 @@ export default class Tram extends PIXI.Sprite {
             this.wheels.forEach(wheel => {
                 if (this.velocity > 0) wheel.rotation += Math.PI / 30
                 else if (this.velocity < 0) wheel.rotation -= Math.PI / 30
-
                 wheel.rotation %= global.util.PI2
             })
 
-            if (global.camera.distance.x > -200 &&
+            if (global.camera.distance.end.x > -200 &&
                 global.camera.target === this &&
                 this.velocity > 0) {
-                global.camera.distance.x -= 3
-            } else if (global.camera.distance.x < 200 &&
+                global.camera.setDistance(-200)
+            } else if (global.camera.distance.end.x < 200 &&
                 global.camera.target === this &&
                 this.velocity < 0) {
-                global.camera.distance.x += 3
+                global.camera.setDistance(200)
             }
 
             this.x += this.velocity

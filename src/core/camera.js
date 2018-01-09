@@ -8,7 +8,13 @@ export default class Camera extends PIXI.Container {
     constructor() {
         super()
 
-        this.distance = {x: 0, y: 0}
+        // distance
+        this.distance = {
+            step: 5,
+            now: {x: 0, y: 0},
+            end: {x: 0, y: 0}
+        }
+
         this.delta = delta
         this.targetLastPosition = {x: 0, y: 0}
 
@@ -19,8 +25,8 @@ export default class Camera extends PIXI.Container {
     }
 
     follow(target) {
-        this.distance.x =
-        this.distance.y = 0
+        this.distance.end.x = 0
+        this.distance.end.y = 0
         this.target = target
     }
 
@@ -29,17 +35,17 @@ export default class Camera extends PIXI.Container {
     }
 
     setDistance(x, y) {
-        x = x === undefined ? this.distance.x : x
-        y = y === undefined ? this.distance.y : y
-        this.distance.x = x
-        this.distance.y = y
+        x = x === undefined ? this.distance.end.x : x
+        y = y === undefined ? this.distance.end.y : y
+        this.distance.end.x = x
+        this.distance.end.y = y
     }
 
     track() {
         const
             point = this.target.getGlobalPosition(),
-            hw = global.game.view.width * .5 + this.distance.x,
-            hh = global.game.view.height * .5 + this.distance.y
+            hw = global.game.view.width * .5 + this.distance.now.x,
+            hh = global.game.view.height * .5 + this.distance.now.y
 
         point.x = ~~(hw - point.x)
         point.y = ~~(hh - point.y)
@@ -70,6 +76,28 @@ export default class Camera extends PIXI.Container {
         global.game.ticker.add(() => {
             this.target && this.track()
             this.x > 0 ? this.x = 0 : null
+
+            // 距离跟随
+            {
+                const {now, end, step} = this.distance
+
+                if (now.x < end.x) {
+                    now.x += step
+                    now.x > end.x ? now.x = end.x : null
+                } else if (now.x > end.x) {
+                    now.x -= step
+                    now.x < end.x ? now.x = end.x : null
+                }
+
+                if (now.y < end.y) {
+                    now.y += step
+                    now.y > end.y ? now.y = end.y : null
+                } else if (now.y > end.y) {
+                    now.y -= step
+                    now.y < end.y ? now.y = end.y : null
+                }
+
+            }
         })
     }
 
