@@ -21,7 +21,6 @@ export default class Camera extends PIXI.Container {
         global.game.stage.addChild(this)
 
         this.update()
-        // this.listen()
     }
 
     follow(target) {
@@ -35,8 +34,8 @@ export default class Camera extends PIXI.Container {
     }
 
     setDistance(x, y) {
-        x = x === undefined ? this.distance.end.x : x
-        y = y === undefined ? this.distance.end.y : y
+        x = Number.isFinite(x) ? this.distance.end.x : x
+        y = Number.isFinite(y) ? this.distance.end.y : y
         this.distance.end.x = x
         this.distance.end.y = y
     }

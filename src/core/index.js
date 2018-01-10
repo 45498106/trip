@@ -22,7 +22,8 @@ loadRes().then(() => {
     global.tram.position.set(667, 480)
     global.layer.children[1].addChild(global.tram)
     global.camera.addChild(global.layer, new Test())
-    // global.camera.position.set(-2278, -360)
+    // global.camera.position.set(-2900, -360)
+    // global.camera.listen()
     global.camera.follow(global.tram)
 })
 
@@ -32,6 +33,7 @@ function loadRes() {
         const prefix = ver === 'production' ? '//cdn.safish.org/trip' : './src'
         global.game.loader
             .add('paper', `${prefix}/assets/sprites/paper.png?${hash}`)
+            .add('water', `${prefix}/assets/sprites/water.png?${hash}`)
             .add('tram', `${prefix}/assets/sprites/tram.json?${hash}`)
             .add('terrain', `${prefix}/assets/sprites/terrain.json?${hash}`)
             .add('depot', `${prefix}/assets/sprites/depot.json?${hash}`)

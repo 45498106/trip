@@ -21,29 +21,35 @@ export default class Layer extends PIXI.Container {
     setup() {
         const
             {background, foreground} = config.init(),
-            cmp = (a, b) => b.z - a.z
+            cmp = (a, b) => a.z - b.z,
+            _this = this
 
         background.sort(cmp).forEach(item => {
-            const sprite = new PIXI.Sprite(item.texture)
-            sprite.config = item
-            sprite.alpha = item.alpha
-            sprite.rotation = item.rotation
-            sprite.position.set(item.x, item.y)
-            sprite.scale.set(item.scale.x, item.scale.y)
-            item.drag && sprite.drag()
-            this.layers[0].addChild(sprite)
+            const child = fit(item)
+            child && this.layers[0].addChild(child)
+        })
+        foreground.sort(cmp).forEach(item => {
+            const child = fit(item)
+            child && this.layers[0].addChild(child)
         })
 
-        foreground.sort(cmp).forEach(item => {
-            const sprite = new PIXI.Sprite(item.texture)
-            sprite.config = item
-            sprite.alpha = item.alpha
-            sprite.rotation = item.rotation
-            sprite.position.set(item.x, item.y)
-            sprite.scale.set(item.scale.x, item.scale.y)
-            item.drag && sprite.drag()
-            this.layers[2].addChild(sprite)
-        })
+        function fit(item) {
+            let display
+            if (item.display) {
+                display = item.display
+            } else if (item.texture) {
+                display = new PIXI.Sprite(item.texture)
+            } else return null
+
+            display.config = item
+            display.alpha = item.alpha
+            display.rotation = item.rotation
+            display.position.set(item.x, item.y)
+            display.scale.set(item.scale.x, item.scale.y)
+            item.drag && display.drag()
+
+            return display
+        }
     }
 
     update() {
@@ -55,7 +61,8 @@ export default class Layer extends PIXI.Container {
             this.layers[0].children.forEach(child => {
                 if (!child.config.drag) {
                     const point = child.getGlobalPosition()
-                    child.x = child.config.x + (hw - point.x) * Math.exp(-25 / child.config.z)
+                    child.x = child.config.x + (hw - point.x) *
+                        (child.config.z < 0 ? Math.exp(25 / child.config.z) : 0)
                 }
             })
         })
