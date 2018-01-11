@@ -75,10 +75,6 @@ export function init() {
             z: -8,
         },
         {
-            texture: depot.textures['depot.6.png'],
-            x: 1318, y: 359,
-        },
-        {
             texture: tree.textures['tree.1.png'],
             x: 1334, y: 474,
             z: -2
@@ -134,77 +130,17 @@ export function init() {
             alpha: .7,
             scale: .7,
         },
+    ]
+
+    const foreground = [
         {
-            texture: depot.textures['depot.18.png'],
-            x: 2914, y: 728,
+            texture: tree.textures['tree.19.png'],
+            x: 3295, y: 886,
         },
-        {
-            texture: depot.textures['depot.2.png'],
-            x: 3356, y: 730,
-            z: 1,
-        },
-        {
-            texture: depot.textures['depot.18.png'],
-            x: 3372, y: 728,
-            drag: true
-        },
-        {
-            texture: depot.textures['depot.2.png'],
-            x: 3814, y: 730,
-            z: 1,
-        },
-        {
-            texture: depot.textures['depot.18.png'],
-            x: 3830, y: 728,
-        },
-        {
-            texture: depot.textures['depot.2.png'],
-            x: 4272, y: 730,
-            z: 1,
-        },
-        {
-            texture: depot.textures['depot.18.png'],
-            x: 4288, y: 728,
-        },
-        {
-            texture: depot.textures['depot.2.png'],
-            x: 4730, y: 730,
-            z: 1,
-        },
-        {
-            texture: depot.textures['depot.18.png'],
-            x: 4746, y: 728,
-        },
-        {
-            texture: depot.textures['depot.2.png'],
-            x: 5188, y: 730,
-            z: 1,
-        },
-        {
-            texture: depot.textures['depot.18.png'],
-            x: 5204, y: 728,
-        },
-        {
-            texture: depot.textures['depot.2.png'],
-            x: 5646, y: 730,
-            z: 1,
-        },
-        {
-            texture: depot.textures['depot.18.png'],
-            x: 5662, y: 728,
-        },
+
         {
             texture: terrain.textures['terrain.23.png'],
             x: 3281, y: 920,
-        },
-        {
-            texture: terrain.textures['terrain.33.png'],
-            x: 3415, y: 926,
-            scale: 1.3,
-        },
-        {
-            texture: depot.textures['depot.7.png'],
-            x: 3489, y: 886,
         },
         {
             texture: terrain.textures['terrain.4.png'],
@@ -217,8 +153,13 @@ export function init() {
             x: 3651, y: 900,
         },
         {
-            texture: tree.textures['tree.19.png'],
-            x: 3295, y: 886,
+            texture: terrain.textures['terrain.33.png'],
+            x: 3415, y: 926,
+            scale: 1.3,
+        },
+        {
+            texture: depot.textures['depot.7.png'],
+            x: 3489, y: 886,
         },
         // 流水
         (function() {
@@ -249,12 +190,74 @@ export function init() {
             return {
                 display: river,
                 x: 3329, y: 940,
+                z: -3,
                 drag: true
             }
-        })()
-    ]
-
-    const foreground = [
+        })(),
+        {
+            texture: depot.textures['depot.18.png'],
+            x: 2914, y: 728,
+        },
+        {
+            texture: depot.textures['depot.2.png'],
+            x: 3356, y: 730,
+            z: -3
+        },
+        {
+            texture: depot.textures['depot.18.png'],
+            x: 3372, y: 728,
+            drag: true
+        },
+        {
+            texture: depot.textures['depot.2.png'],
+            x: 3814, y: 730,
+            z: -1,
+        },
+        {
+            texture: depot.textures['depot.18.png'],
+            x: 3830, y: 728,
+        },
+        {
+            texture: depot.textures['depot.2.png'],
+            x: 4272, y: 730,
+            z: -1,
+        },
+        {
+            texture: depot.textures['depot.18.png'],
+            x: 4288, y: 728,
+        },
+        {
+            texture: depot.textures['depot.2.png'],
+            x: 4730, y: 730,
+            z: -1,
+        },
+        {
+            texture: depot.textures['depot.18.png'],
+            x: 4746, y: 728,
+        },
+        {
+            texture: depot.textures['depot.2.png'],
+            x: 5188, y: 730,
+            z: -1,
+        },
+        {
+            texture: depot.textures['depot.18.png'],
+            x: 5204, y: 728,
+        },
+        {
+            texture: depot.textures['depot.2.png'],
+            x: 5646, y: 730,
+            z: -1,
+        },
+        {
+            texture: depot.textures['depot.18.png'],
+            x: 5662, y: 728,
+        },
+        {
+            texture: depot.textures['depot.6.png'],
+            x: 1318, y: 359,
+            z: -1,
+        },
         {
             texture: tree.textures['tree.1.png'],
             x: 390, y: 455
@@ -334,11 +337,7 @@ export function init() {
             x: 2621, y: 654,
             z: 1,
         },
-        {
-            texture: terrain.textures['terrain.47.png'],
-            x: 2827, y: 613,
-            rotation: Math.PI / 4,
-        },
+
         {
             texture: terrain.textures['terrain.5.png'],
             x: 2799, y: 702,
@@ -346,16 +345,7 @@ export function init() {
             alpha: .6,
             scale: {x: .5, y: 1.2},
         },
-        {
-            texture: tree.textures['tree.16.png'],
-            x: 2914, y: 777,
-            z: 1,
-        },
-        {
-            texture: terrain.textures['terrain.2.png'],
-            x: 2920, y: 827,
-            z: -1,
-        },
+
         {
             texture: terrain.textures['terrain.8.png'],
             x: 2259, y: 687,
@@ -371,24 +361,24 @@ export function init() {
         {
             texture: depot.textures['depot.5.png'],
             x: 3120, y: 854,
-            z: -3,
+            z: -2
         },
         {
             texture: depot.textures['depot.5.png'],
             x: 3305, y: 854,
-            z: -3,
+            z: -2
         },
         {
             texture: depot.textures['depot.4.png'],
             x: 3265, y: 964,
             rotation: -Math.PI * .5,
-            z: -2,
+            z: -6,
         },
         {
             texture: depot.textures['depot.4.png'],
             x: 3475, y: 964,
             rotation: -Math.PI * .5,
-            z: -2,
+            z: -6,
         },
         {
             texture: terrain.textures['terrain.43.png'],
@@ -447,10 +437,26 @@ export function init() {
         {
             texture: misc.textures['misc.16.png'],
             x: 5556, y: 940,
-            z: -4,
+            z: -3,
             alpha: .5,
             scale: {x: .7, y: 1},
-        }
+        },
+        {
+            texture: tree.textures['tree.16.png'],
+            x: 2914, y: 777,
+            z: 1,
+        },
+        {
+            texture: terrain.textures['terrain.47.png'],
+            x: 2827, y: 613,
+            rotation: Math.PI / 4,
+            z: 1
+        },
+        {
+            texture: terrain.textures['terrain.2.png'],
+            x: 2920, y: 827,
+            z: -1
+        },
     ]
 
     format(background)
@@ -472,3 +478,5 @@ function format(arr) {
         }
     })
 }
+
+export const path = [{"x":1456.0786092715232,"y":613.8811920529802},{"x":1881.547814569536,"y":615.6480794701987}]

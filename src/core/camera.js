@@ -34,8 +34,8 @@ export default class Camera extends PIXI.Container {
     }
 
     setDistance(x, y) {
-        x = Number.isFinite(x) ? this.distance.end.x : x
-        y = Number.isFinite(y) ? this.distance.end.y : y
+        x = Number.isFinite(x) ? x : this.distance.end.x
+        y = Number.isFinite(y) ? y : this.distance.end.y
         this.distance.end.x = x
         this.distance.end.y = y
     }

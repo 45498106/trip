@@ -2,6 +2,7 @@ import './util.js'
 import Camera from './camera.js'
 import Tram from './tram.js'
 import Layer from './layer.js'
+import Road from './road.js'
 import physics from './physics.js'
 
 import Test from './test.js'
@@ -18,11 +19,11 @@ loadRes().then(() => {
     global.camera = new Camera()
     global.layer = new Layer()
     global.tram = new Tram(global.resource.tram.textures['tram.1.png'])
-    global.tram.alpha = 0
-    global.tram.position.set(667, 480)
+    // global.tram = new Tram(global.resource.plane.texture)
+    // global.tram.alpha = 0
     global.layer.children[1].addChild(global.tram)
     global.camera.addChild(global.layer, new Test())
-    // global.camera.position.set(-2900, -360)
+    // global.camera.position.set(-5000, -360)
     // global.camera.listen()
     global.camera.follow(global.tram)
 })
@@ -39,6 +40,8 @@ function loadRes() {
             .add('depot', `${prefix}/assets/sprites/depot.json?${hash}`)
             .add('tree', `${prefix}/assets/sprites/tree.json?${hash}`)
             .add('misc', `${prefix}/assets/sprites/misc.json?${hash}`)
+            .add('tramShape', `${prefix}/assets/physics/tram.json?${hash}`)
+
             .load((loader, resource) => {
                 global.resource = resource
                 resolve()
@@ -74,9 +77,7 @@ function resize() {
         global.game.renderer.resize(width * global.util.setting.ratio,
             height * global.util.setting.ratio)
 
-        if (global.paper) {
-            global.paper.scale.set(1 / global.util.ratio)
-        }
+        global.paper && global.paper.scale.set(1 / global.util.ratio)
 
         // stage 偏移
         global.game.stage.scale.set(global.util.ratio)

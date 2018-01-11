@@ -31,6 +31,7 @@ PIXI.DisplayObject.prototype.drag = function() {
             down = true
             delta.x = this.x - event.data.global.x / global.util.ratio
             delta.y = this.y - event.data.global.y / global.util.ratio
+            console.log(`x: ${~~this.x}, y: ${~~this.y}`)
         })
         .on('pointerup', () => {
             down = false

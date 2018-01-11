@@ -40,6 +40,8 @@ PIXI.DisplayObject.prototype.enable = function() {
         this.pivot.set(this.width * .5, this.height * .5)
 
     body.node = this
+    this.body = body
+
     body.lastPostion = body.getPosition().clone()
     body.createFixture(
         planck.Box(this.width * .5 * step, this.height * .5 * step),
@@ -48,7 +50,7 @@ PIXI.DisplayObject.prototype.enable = function() {
     return body
 }
 
-planck.Body.prototype.clearShapes = function() {
+planck.Body.prototype.clearFixtures = function() {
     for (let fixture = this.getFixtureList(); fixture; fixture = fixture.getNext()) {
         this.destroyFixture(fixture)
     }
@@ -58,9 +60,21 @@ planck.Body.prototype.clearShapes = function() {
 planck.Body.prototype.loadPolygon = function(path, fixtureDef={}) {
     path.forEach(vertexs => {
         this.createFixture(
-            planck.Polygon(vertexs.map(vertex => planck.Vec2(vertex[0] / ptm, vertex[1] / ptm))),
+            planck.Polygon(vertexs.map(vertex => planck.Vec2(vertex[0] * step, vertex[1] * step))),
             {density: 1, ...fixtureDef}
         )
     })
     return this
+}
+
+planck.Body.prototype.createChain = function(points, loop=false, fixtureDef={}) {
+    this.createFixture(
+        planck.Chain(points.map(point => planck.Vec2(point.x * step , point.y * step)), loop),
+        {density: 1, ...fixtureDef}
+    )
+    return this
+}
+
+planck.Body.prototype.destroy = function() {
+    return world.destroyBody(this)
 }

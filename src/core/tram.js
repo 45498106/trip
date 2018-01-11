@@ -1,12 +1,15 @@
 export default class Tram extends PIXI.Sprite {
     constructor(...args) {
+        const shape = global.resource.tramShape.data.bodies
+
         super(...args)
 
         this.speed = 5
         this.velocity = 0
         this.acceleration = 0
 
-        this.anchor.set(.5)
+        this.position.set(1600, 100)
+
 
         this.doors = [
             new PIXI.Sprite(global.resource.tram.textures['tram.6.png']),
@@ -18,7 +21,6 @@ export default class Tram extends PIXI.Sprite {
         this.doors[0].position.set(-123, 12)
         this.doors[1].position.set(123, 12)
 
-        this.addChild(...this.doors)
 
         this.axles = [
             new PIXI.Sprite(global.resource.tram.textures['tram.3.png']),
@@ -49,9 +51,14 @@ export default class Tram extends PIXI.Sprite {
         this.axles[0].addChild(this.wheels[0], this.wheels[1])
         this.axles[1].addChild(this.wheels[2], this.wheels[3])
 
-        this.addChild(...this.axles)
+
+        this.addChild(...this.doors, ...this.axles)
         this.update()
         this.listen()
+
+
+        this.enable().clearFixtures()
+            .loadPolygon(shape.body.fixtures[0].polygons)
     }
 
     update() {
@@ -84,8 +91,18 @@ export default class Tram extends PIXI.Sprite {
                     break
                 }
 
+                case 38: {
+                    this.y -= 3
+                    break
+                }
+
                 case 39: {
                     this.velocity = this.speed
+                    break
+                }
+
+                case 40: {
+                    this.y += 3
                     break
                 }
             }
@@ -104,7 +121,6 @@ export default class Tram extends PIXI.Sprite {
                     this.velocity = 0
                     break
                 }
-
             }
         })
 
@@ -121,16 +137,16 @@ export default class Tram extends PIXI.Sprite {
         //         this.velocity = 0
         //     })
 
-        document.addEventListener('touchstart', event => {
-            if (event.touches.item(0).pageX > window.innerWidth >> 1) {
-                this.velocity = this.speed
-            } else {
-                this.velocity = -this.speed
-            }
-        })
-        document.addEventListener('touchend', event => {
-            this.velocity = 0
-        })
+        // document.addEventListener('touchstart', event => {
+        //     if (event.touches.item(0).pageX > window.innerWidth >> 1) {
+        //         this.velocity = this.speed
+        //     } else {
+        //         this.velocity = -this.speed
+        //     }
+        // })
+        // document.addEventListener('touchend', event => {
+        //     this.velocity = 0
+        // })
     }
 }
 
