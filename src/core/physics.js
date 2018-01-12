@@ -1,4 +1,5 @@
 import * as planck from 'planck-js'
+import { Vec2 } from 'planck-js';
 
 const
     world = planck.World(planck.Vec2(0, 6)),
@@ -14,8 +15,10 @@ function loop() {
                 p1 = body.getPosition(),
                 p2 = body.lastPostion
 
-            node.x += (p1.x - p2.x) * ptm
-            node.y += (p1.y - p2.y) * ptm
+            node.x = p1.x * ptm
+            node.y = p1.y * ptm
+
+            if (node.name === '1') console.log(p1.y)
 
             node.rotation = body.getAngle()
 
@@ -40,9 +43,13 @@ PIXI.DisplayObject.prototype.enable = function() {
         this.pivot.set(this.width * .5, this.height * .5)
 
     body.node = this
-    this.body = body
+    this.rigidBody = body
 
     body.lastPostion = body.getPosition().clone()
+
+
+    if (this.name === '1') console.log(point.y, body.lastPostion.y)
+
     body.createFixture(
         planck.Box(this.width * .5 * step, this.height * .5 * step),
         {density: 1}
@@ -67,6 +74,14 @@ planck.Body.prototype.loadPolygon = function(path, fixtureDef={}) {
     return this
 }
 
+planck.Body.prototype.loadCircle = function(r, fixtureDef={}) {
+    this.createFixture(
+        planck.Circle(r * step),
+        {density: 1, ...fixtureDef}
+    )
+    return this
+}
+
 planck.Body.prototype.createChain = function(points, loop=false, fixtureDef={}) {
     this.createFixture(
         planck.Chain(points.map(point => planck.Vec2(point.x * step , point.y * step)), loop),
@@ -77,4 +92,27 @@ planck.Body.prototype.createChain = function(points, loop=false, fixtureDef={}) 
 
 planck.Body.prototype.destroy = function() {
     return world.destroyBody(this)
+}
+
+planck.Body.prototype.createRevoluteJoint = function(body, anchor, def={}) {
+    world.createJoint(
+        planck.RevoluteJoint(
+            def,
+            this,
+            body,
+            planck.Vec2(anchor.x * step, anchor.y * step)
+        )
+    )
+    return this
+}
+
+planck.Body.prototype.createWheelJoint = function(body, anchor, axis, def={}) {
+    world.createJoint(
+        planck.WheelJoint(
+            def, this, body,
+            planck.Vec2(anchor.x * step, anchor.y * step),
+            planck.Vec2(axis.x, axis.y)
+        )
+    )
+    return this
 }

@@ -1,14 +1,13 @@
-export default class Tram extends PIXI.Sprite {
+export default class Tram extends PIXI.Container {
     constructor(...args) {
-        const shape = global.resource.tramShape.data.bodies
 
         super(...args)
 
-        this.speed = 5
+        this.speed = 20
         this.velocity = 0
         this.acceleration = 0
 
-        this.position.set(1600, 100)
+        this.body = new PIXI.Sprite(global.resource.tram.textures['tram.1.png'])
 
 
         this.doors = [
@@ -26,10 +25,6 @@ export default class Tram extends PIXI.Sprite {
             new PIXI.Sprite(global.resource.tram.textures['tram.3.png']),
             new PIXI.Sprite(global.resource.tram.textures['tram.3.png'])
         ]
-        this.axles[0].anchor.set(.5)
-        this.axles[1].anchor.set(.5)
-        this.axles[0].position.set(-130, 82)
-        this.axles[1].position.set(130, 82)
 
         this.wheels = [
             new PIXI.Sprite(global.resource.tram.textures['tram.2.png']),
@@ -37,37 +32,80 @@ export default class Tram extends PIXI.Sprite {
             new PIXI.Sprite(global.resource.tram.textures['tram.2.png']),
             new PIXI.Sprite(global.resource.tram.textures['tram.2.png'])
         ]
-        this.wheels[0].anchor.set(.5)
-        this.wheels[1].anchor.set(.5)
-        this.wheels[2].anchor.set(.5)
-        this.wheels[3].anchor.set(.5)
-
-        this.wheels[0].position.set(-30, 5)
-        this.wheels[2].position.set(-30, 5)
-        this.wheels[1].position.set(30, 5)
-        this.wheels[3].position.set(30, 5)
 
 
-        this.axles[0].addChild(this.wheels[0], this.wheels[1])
-        this.axles[1].addChild(this.wheels[2], this.wheels[3])
+        this.body.addChild(...this.doors)
+        this.addChild(this.body, ...this.axles, ...this.wheels)
 
-
-        this.addChild(...this.doors, ...this.axles)
+        this.setPhysics()
         this.update()
+
+
         this.listen()
+    }
+
+    setPhysics() {
+        const
+            shape = global.resource.tramShape.data.bodies,
+            wheelDef = {
+                motorSpeed: 0,
+                maxMotorTorque: 500,
+                enableMotor: false,
+                frequencyHz: 8,
+                dampingRatio: .7
+            },
+            wheelAxis = {x: 0, y: 1}
+
+        this.body.position.set(1680, 400)
+
+        this.axles[0].position.set(this.body.x - 130, this.body.y + 80)
+        this.axles[1].position.set(this.body.x + 130, this.body.y + 80)
+
+        this.wheels[0].position.set(this.axles[0].x - 30, this.axles[0].y + 5)
+        this.wheels[1].position.set(this.axles[0].x + 30, this.axles[0].y + 5)
+        this.wheels[2].position.set(this.axles[1].x - 30, this.axles[1].y + 5)
+        this.wheels[3].position.set(this.axles[1].x + 30, this.axles[1].y + 5)
+
+        this.body.enable().setStatic().clearFixtures().loadPolygon(
+            shape.body.fixtures[0].polygons, {density: .1})
+
+        this.axles.forEach((axle, i) => {
+            axle.enable().clearFixtures().loadPolygon(shape.axle.fixtures[0].polygons)
+            this.body.rigidBody.createRevoluteJoint(
+                axle.rigidBody,
+                axle.position,
+                {
+                    lowerAngle: -.02 * Math.PI,
+                    upperAngle: .02 * Math.PI,
+                    enableLimit: true
+                }
+            )
+        })
+
+        this.wheels.forEach((wheel, i) => {
+            const axle = this.axles[i < 2 ? 0 : 1]
+            i === 1 ? wheel.name = '1' : null
+
+            wheel.enable().clearFixtures().loadCircle(15)
+            axle.rigidBody.createWheelJoint(
+                wheel.rigidBody,
+                wheel.position,
+                wheelAxis,
+                wheelDef
+            )
+        })
 
 
-        this.enable().clearFixtures()
-            .loadPolygon(shape.body.fixtures[0].polygons)
     }
 
     update() {
         global.game.ticker.add(() => {
-            this.wheels.forEach(wheel => {
-                if (this.velocity > 0) wheel.rotation += Math.PI / 30
-                else if (this.velocity < 0) wheel.rotation -= Math.PI / 30
-                wheel.rotation %= global.util.PI2
-            })
+            // this.wheels.forEach(wheel => {
+            //     if (this.velocity > 0) wheel.rotation += Math.PI / 30
+            //     else if (this.velocity < 0) wheel.rotation -= Math.PI / 30
+            //     wheel.rotation %= global.util.PI2
+            // })
+            // console.log(this.wheels[0].y)
 
             if (global.camera.distance.end.x > -200 &&
                 global.camera.target === this &&
@@ -79,11 +117,14 @@ export default class Tram extends PIXI.Sprite {
                 global.camera.setDistance(200)
             }
 
-            this.x += this.velocity
+            // this.x += this.velocity
         })
     }
 
     listen() {
+        /* 获取 wheelJoint */
+        const joints = this.wheels.map(wheel => wheel.rigidBody.getJointList().joint)
+
         window.addEventListener('keydown', event => {
             switch (event.keyCode) {
                 case 37: {
@@ -106,22 +147,35 @@ export default class Tram extends PIXI.Sprite {
                     break
                 }
             }
+
+            joints.forEach(joint => {
+                joint.enableMotor(true)
+                joint.setMotorSpeed(this.velocity)
+            })
         })
 
         window.addEventListener('keyup', event => {
             switch (event.keyCode) {
                 case 37: {
-                    // this.acceleration = .1
                     this.velocity = 0
+                    joints.forEach(joint => {
+                        joint.enableMotor(false)
+                        joint.setMotorSpeed(this.velocity)
+                    })
                     break
                 }
 
                 case 39: {
-                    // this.acceleration = -.1
                     this.velocity = 0
+                    joints.forEach(joint => {
+                        joint.enableMotor(false)
+                        joint.setMotorSpeed(this.velocity)
+                    })
                     break
                 }
             }
+
+
         })
 
         // global.game.stage.interactive = true

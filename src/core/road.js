@@ -74,12 +74,14 @@ export default class Road extends PIXI.Container {
 
     /* 物理相关 */
     resetPhys() {
-        this.body && this.body.destroy()
+        this.rigidBody && this.rigidBody.destroy()
         this.enable().setStatic().clearFixtures()
             .createChain(this.points.map(point => ({
                 x: point.x - this.x,
                 y: point.y - this.y
-            })), false)
+            })), false, {
+                friction: .8
+            })
         // 重置锚点
         this.pivot.set(0, 0)
     }
