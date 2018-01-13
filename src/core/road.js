@@ -5,14 +5,15 @@ export default class Road extends PIXI.Container {
         super()
         this.points = points
 
-        // global.camera.interactive = true
-        // global.camera
-        //     .on('pointerdown', event => {
-        //         const point = global.camera.toLocal(event.data.global)
-        //         this.addPoint(point.x, point.y)
-        //     })
-
-        this.draw()
+        if (global.util.debug) {
+            global.camera.interactive = true
+            global.camera
+                .on('pointerdown', event => {
+                    const point = global.camera.toLocal(event.data.global)
+                    this.addPoint(point.x, point.y)
+                })
+            this.draw()
+        } else this.setPhysics()
     }
 
     addPoint(x, y) {
@@ -59,18 +60,33 @@ export default class Road extends PIXI.Container {
 
             /* 监听 */
             dot.interactive = true
+            dot.delta = {}
             dot.on('pointerdown', event => {
-                this.removePoint(dot.x, dot.y)
+                dot.down = true
+                dot.delta.x = dot.x - event.data.global.x / global.util.ratio
+                dot.delta.y = dot.y - event.data.global.y / global.util.ratio
+                event.stopPropagation()
+            }).on('pointermove', event => {
+                if (dot.down) {
+                    dot.x = event.data.global.x / global.util.ratio + dot.delta.x
+                    dot.y = event.data.global.y / global.util.ratio + dot.delta.y
+                }
+            }).on('pointerup', event => {
+                dot.down = false
+                this.points[i].x = dot.x
+                this.points[i].y = dot.y
+                console.log(JSON.stringify(this.points))
+                this.draw()
             })
 
             this.addChild(dot)
         })
 
-        this.resetPhys()
+        this.setPhysics()
     }
 
     /* 物理相关 */
-    resetPhys() {
+    setPhysics() {
         this.rigidBody && this.rigidBody.destroy()
         this.enable().setStatic()
             .createChain(this.points.map(point => ({

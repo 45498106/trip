@@ -187,16 +187,24 @@ export default class Tram extends PIXI.Container {
         //         this.velocity = 0
         //     })
 
-        // document.addEventListener('touchstart', event => {
-        //     if (event.touches.item(0).pageX > window.innerWidth >> 1) {
-        //         this.velocity = this.speed
-        //     } else {
-        //         this.velocity = -this.speed
-        //     }
-        // })
-        // document.addEventListener('touchend', event => {
-        //     this.velocity = 0
-        // })
+        document.addEventListener('touchstart', event => {
+            if (event.touches.item(0).pageX > window.innerWidth >> 1) {
+                this.velocity = this.speed
+            } else {
+                this.velocity = -this.speed
+            }
+            joints.forEach(joint => {
+                joint.enableMotor(true)
+                joint.setMotorSpeed(this.velocity)
+            })
+        })
+        document.addEventListener('touchend', event => {
+            this.velocity = 0
+            joints.forEach(joint => {
+                joint.enableMotor(true)
+                joint.setMotorSpeed(this.velocity)
+            })
+        })
     }
 }
 

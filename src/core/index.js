@@ -19,13 +19,15 @@ loadRes().then(() => {
     global.camera = new Camera()
     global.layer = new Layer()
     global.tram = new Tram()
-    // global.tram = new Tram(global.resource.plane.texture)
-    // global.tram.alpha = 0
     global.layer.children[1].addChild(global.tram)
-    global.camera.addChild(global.layer, new Test())
-    global.camera.position.set(0, 0)
-    global.camera.listen()
-    // global.camera.follow(global.tram.body)
+    global.camera.addChild(global.layer)
+
+    if (global.util.debug) {
+        global.camera.position.set(-2527, -360)
+        global.camera.listen()
+    } else {
+        global.camera.follow(global.tram.body)
+    }
 })
 
 

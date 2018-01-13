@@ -30,10 +30,10 @@ export default class Layer extends PIXI.Container {
             const child = fit(item)
             child && this.layers[0].addChild(child)
         })
-        // foreground.sort(cmp).forEach(item => {
-        //     const child = fit(item)
-        //     child && this.layers[2].addChild(child)
-        // })
+        foreground.sort(cmp).forEach(item => {
+            const child = fit(item)
+            child && this.layers[2].addChild(child)
+        })
 
         function fit(item) {
             let display

@@ -1,6 +1,8 @@
 global.util = {
     PI2: Math.PI * 2,
 
+    debug: false,
+
     get ratio() {
         return Math.min(
             global.game.view.width / global.util.setting.width,

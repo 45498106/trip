@@ -15,6 +15,9 @@ export default class Camera extends PIXI.Container {
             end: {x: 0, y: 0}
         }
 
+        this.speed = 8
+        this.velocity = {x: 0, y: 0}
+
         this.delta = delta
         this.targetLastPosition = {x: 0, y: 0}
 
@@ -71,9 +74,14 @@ export default class Camera extends PIXI.Container {
 
     }
 
+    manual() {
+        this.x += this.velocity.x
+        this.y += this.velocity.y
+    }
+
     update() {
         global.game.ticker.add(() => {
-            this.target && this.track()
+            this.target ? this.track() : this.manual()
             this.x > 0 ? this.x = 0 : null
 
             // 距离跟随
@@ -104,25 +112,32 @@ export default class Camera extends PIXI.Container {
         window.addEventListener('keydown', event => {
             switch (event.keyCode) {
                 case 37: {
-                    this.x += 8
+                    this.velocity.x = this.speed
                     break
                 }
 
                 case 39: {
-                    this.x -= 8
+                    this.velocity.x = -this.speed
                     break
                 }
 
                 case 38: {
-                    this.y += 8
+                    this.velocity.y = this.speed
+
                     break
                 }
 
                 case 40: {
-                    this.y -= 8
+                    this.velocity.x = -this.speed
+
                     break
                 }
             }
+        })
+
+        window.addEventListener('keyup', event => {
+            this.velocity.x =
+            this.velocity.y = 0
         })
     }
 }
