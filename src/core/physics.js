@@ -1,8 +1,7 @@
 import * as planck from 'planck-js'
-import { Vec2 } from 'planck-js';
 
 const
-    world = planck.World(planck.Vec2(0, 6)),
+    world = planck.World(planck.Vec2(0, 3)),
     ptm = 32,
     step = 1 / ptm
 
@@ -12,26 +11,24 @@ function loop() {
         if (body.isDynamic()) {
             const
                 node = body.node,
-                p1 = body.getPosition(),
-                p2 = body.lastPostion
+                point = body.getPosition()
 
-            node.x = p1.x * ptm
-            node.y = p1.y * ptm
-
-            if (node.name === '1') console.log(p1.y)
+            node.x = point.x * ptm
+            node.y = point.y * ptm
 
             node.rotation = body.getAngle()
-
-            body.lastPostion.x = p1.x
-            body.lastPostion.y = p1.y
         }
     }
     world.step(step)
     window.requestAnimationFrame(loop)
 }
 
-/* 扩展方法 */
-PIXI.DisplayObject.prototype.enable = function() {
+/*
+* 扩展方法
+*/
+
+/* pixi */
+PIXI.DisplayObject.prototype.enable = function(anchor) {
     const
         point = this.getGlobalPosition(),
         body = world.createBody({
@@ -39,23 +36,52 @@ PIXI.DisplayObject.prototype.enable = function() {
             position: planck.Vec2(point.x * step, point.y * step)
         })
 
-    this.anchor ? this.anchor.set(.5) :
-        this.pivot.set(this.width * .5, this.height * .5)
+    anchor = anchor || {x: .5, y: .5}
+    this.anchor ? this.anchor.set(anchor.x, anchor.y) :
+            this.pivot.set(this.width * anchor.x, this.height * anchor.y)
 
     body.node = this
     this.rigidBody = body
 
     body.lastPostion = body.getPosition().clone()
 
-
-    if (this.name === '1') console.log(point.y, body.lastPostion.y)
-
-    body.createFixture(
-        planck.Box(this.width * .5 * step, this.height * .5 * step),
-        {density: 1}
-    )
     return body
 }
+
+PIXI.DisplayObject.prototype.getJoints = function() {
+    const joints = []
+    for (let joint = this.rigidBody.getJointList(); joint; joint = joint.next) {
+        joints.push(joint.joint)
+    }
+    return joints
+}
+
+/* 开启鼠标操作 */
+PIXI.DisplayObject.prototype.enableMJ = function() {
+    let down
+
+    this.interactive = true
+    this.on('pointerdown', event => {
+        down = true
+        this.rigidBody.createMouseJoint(
+            global.camera.toLocal(event.data.global)
+        )
+    }).on('pointermove', event => {
+        if (down) {
+            this.mouseJoint.follow(
+                global.camera.toLocal(event.data.global)
+            )
+        }
+    }).on('pointerup', () => {
+        down = false
+        this.rigidBody.destroyJoint(this.mouseJoint)
+    }).on('pointerupoutside', () => {
+        down = false
+        this.rigidBody.destroyJoint(this.mouseJoint)
+    })
+}
+
+/* planck */
 
 planck.Body.prototype.clearFixtures = function() {
     for (let fixture = this.getFixtureList(); fixture; fixture = fixture.getNext()) {
@@ -82,6 +108,14 @@ planck.Body.prototype.loadCircle = function(r, fixtureDef={}) {
     return this
 }
 
+planck.Body.prototype.loadBox = function(w, h, fixtureDef={}) {
+    this.createFixture(
+        planck.Box(w * step, h * step),
+        {density: 1, ...fixtureDef}
+    )
+    return this
+}
+
 planck.Body.prototype.createChain = function(points, loop=false, fixtureDef={}) {
     this.createFixture(
         planck.Chain(points.map(point => planck.Vec2(point.x * step , point.y * step)), loop),
@@ -92,6 +126,11 @@ planck.Body.prototype.createChain = function(points, loop=false, fixtureDef={}) 
 
 planck.Body.prototype.destroy = function() {
     return world.destroyBody(this)
+}
+
+planck.Body.prototype.destroyJoint = function(joint) {
+    world.destroyJoint(joint)
+    return this
 }
 
 planck.Body.prototype.createRevoluteJoint = function(body, anchor, def={}) {
@@ -116,3 +155,28 @@ planck.Body.prototype.createWheelJoint = function(body, anchor, axis, def={}) {
     )
     return this
 }
+
+planck.Body.prototype.createMouseJoint = function(point) {
+    const
+        ground  = world.createBody()
+
+    this.node.mouseJoint = world.createJoint(
+        planck.MouseJoint(
+            {maxForce: 1e3},
+            ground, this,
+            planck.Vec2(point.x * step, point.y * step)
+        )
+    )
+
+    return this
+}
+
+planck.MouseJoint.prototype.follow = function(point) {
+    point.x *= step
+    point.y *= step
+    this.setTarget(point)
+}
+
+
+
+

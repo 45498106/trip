@@ -8,10 +8,7 @@ export default class Road extends PIXI.Container {
         // global.camera.interactive = true
         // global.camera
         //     .on('pointerdown', event => {
-        //         const point = global.camera.toLocal({
-        //             x: event.data.global.x,
-        //             y: event.data.global.y
-        //         })
+        //         const point = global.camera.toLocal(event.data.global)
         //         this.addPoint(point.x, point.y)
         //     })
 
@@ -75,12 +72,12 @@ export default class Road extends PIXI.Container {
     /* 物理相关 */
     resetPhys() {
         this.rigidBody && this.rigidBody.destroy()
-        this.enable().setStatic().clearFixtures()
+        this.enable().setStatic()
             .createChain(this.points.map(point => ({
                 x: point.x - this.x,
                 y: point.y - this.y
-            })), false, {
-                friction: .8
+            })), null, {
+                friction: .9
             })
         // 重置锚点
         this.pivot.set(0, 0)

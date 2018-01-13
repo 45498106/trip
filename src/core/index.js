@@ -23,9 +23,9 @@ loadRes().then(() => {
     // global.tram.alpha = 0
     global.layer.children[1].addChild(global.tram)
     global.camera.addChild(global.layer, new Test())
-    // global.camera.position.set(-5000, -360)
-    // global.camera.listen()
-    global.camera.follow(global.tram.body)
+    global.camera.position.set(0, 0)
+    global.camera.listen()
+    // global.camera.follow(global.tram.body)
 })
 
 

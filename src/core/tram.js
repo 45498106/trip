@@ -3,7 +3,7 @@ export default class Tram extends PIXI.Container {
 
         super(...args)
 
-        this.speed = 20
+        this.speed = 12
         this.velocity = 0
         this.acceleration = 0
 
@@ -42,6 +42,12 @@ export default class Tram extends PIXI.Container {
 
 
         this.listen()
+
+        this.wheels.forEach(wheel => wheel.enableMJ())
+        this.axles.forEach(wheel => wheel.enableMJ())
+        this.body.enableMJ()
+
+
     }
 
     setPhysics() {
@@ -49,10 +55,10 @@ export default class Tram extends PIXI.Container {
             shape = global.resource.tramShape.data.bodies,
             wheelDef = {
                 motorSpeed: 0,
-                maxMotorTorque: 500,
+                maxMotorTorque: 1000,
                 enableMotor: false,
-                frequencyHz: 8,
-                dampingRatio: .7
+                frequencyHz: 3,
+                dampingRatio: .5
             },
             wheelAxis = {x: 0, y: 1}
 
@@ -66,11 +72,12 @@ export default class Tram extends PIXI.Container {
         this.wheels[2].position.set(this.axles[1].x - 30, this.axles[1].y + 5)
         this.wheels[3].position.set(this.axles[1].x + 30, this.axles[1].y + 5)
 
-        this.body.enable().setStatic().clearFixtures().loadPolygon(
+
+        this.body.enable().loadPolygon(
             shape.body.fixtures[0].polygons, {density: .1})
 
         this.axles.forEach((axle, i) => {
-            axle.enable().clearFixtures().loadPolygon(shape.axle.fixtures[0].polygons)
+            axle.enable().loadPolygon(shape.axle.fixtures[0].polygons)
             this.body.rigidBody.createRevoluteJoint(
                 axle.rigidBody,
                 axle.position,
@@ -84,9 +91,7 @@ export default class Tram extends PIXI.Container {
 
         this.wheels.forEach((wheel, i) => {
             const axle = this.axles[i < 2 ? 0 : 1]
-            i === 1 ? wheel.name = '1' : null
-
-            wheel.enable().clearFixtures().loadCircle(15)
+            wheel.enable().loadCircle(15, {friction: 1})
             axle.rigidBody.createWheelJoint(
                 wheel.rigidBody,
                 wheel.position,
@@ -94,18 +99,10 @@ export default class Tram extends PIXI.Container {
                 wheelDef
             )
         })
-
-
     }
 
     update() {
         global.game.ticker.add(() => {
-            // this.wheels.forEach(wheel => {
-            //     if (this.velocity > 0) wheel.rotation += Math.PI / 30
-            //     else if (this.velocity < 0) wheel.rotation -= Math.PI / 30
-            //     wheel.rotation %= global.util.PI2
-            // })
-            // console.log(this.wheels[0].y)
 
             if (global.camera.distance.end.x > -200 &&
                 global.camera.target === this &&
@@ -117,13 +114,12 @@ export default class Tram extends PIXI.Container {
                 global.camera.setDistance(200)
             }
 
-            // this.x += this.velocity
         })
     }
 
     listen() {
         /* 获取 wheelJoint */
-        const joints = this.wheels.map(wheel => wheel.rigidBody.getJointList().joint)
+        const joints = this.wheels.map(wheel => wheel.getJoints()[0])
 
         window.addEventListener('keydown', event => {
             switch (event.keyCode) {
