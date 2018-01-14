@@ -22,8 +22,8 @@ loadRes().then(() => {
     global.layer.children[1].addChild(global.tram)
     global.camera.addChild(global.layer)
 
-    if (global.util.debug) {
-        global.camera.position.set(-2527, -360)
+    if (global.util.debug.camera) {
+        global.camera.position.set(-6280, -24)
         global.camera.listen()
     } else {
         global.camera.follow(global.tram.body)
@@ -42,6 +42,7 @@ function loadRes() {
             .add('depot', `${prefix}/assets/sprites/depot.json?${hash}`)
             .add('tree', `${prefix}/assets/sprites/tree.json?${hash}`)
             .add('misc', `${prefix}/assets/sprites/misc.json?${hash}`)
+            .add('house', `${prefix}/assets/sprites/house.json?${hash}`)
             .add('tramShape', `${prefix}/assets/physics/tram.json?${hash}`)
 
             .load((loader, resource) => {

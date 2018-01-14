@@ -1,7 +1,12 @@
 global.util = {
     PI2: Math.PI * 2,
 
-    debug: false,
+    // 最好不要同时开启
+    debug: {
+        scene: true,
+        road: false,
+        camera: true
+    },
 
     get ratio() {
         return Math.min(

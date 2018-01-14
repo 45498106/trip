@@ -5,7 +5,7 @@ export default class Road extends PIXI.Container {
         super()
         this.points = points
 
-        if (global.util.debug) {
+        if (global.util.debug.road) {
             global.camera.interactive = true
             global.camera
                 .on('pointerdown', event => {

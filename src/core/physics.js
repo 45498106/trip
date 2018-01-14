@@ -57,7 +57,7 @@ PIXI.DisplayObject.prototype.getJoints = function() {
 }
 
 /* 开启鼠标操作 */
-PIXI.DisplayObject.prototype.enableMJ = function() {
+PIXI.DisplayObject.prototype.enableMouseJonint = function() {
     let down
 
     this.interactive = true

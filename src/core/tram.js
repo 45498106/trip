@@ -43,11 +43,6 @@ export default class Tram extends PIXI.Container {
 
         this.listen()
 
-        this.wheels.forEach(wheel => wheel.enableMJ())
-        this.axles.forEach(wheel => wheel.enableMJ())
-        this.body.enableMJ()
-
-
     }
 
     setPhysics() {

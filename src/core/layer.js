@@ -1,4 +1,4 @@
-import * as config from '../ui/config.js'
+import * as scenes from '../scenes/index.js'
 import Road from './road.js'
 
 export default class Layer extends PIXI.Container {
@@ -17,12 +17,12 @@ export default class Layer extends PIXI.Container {
         this.update()
 
         /* 绘制路径 */
-        this.layers[2].addChild(new Road(config.path))
+        this.layers[2].addChild(new Road(scenes.road.tram))
     }
 
     setup() {
         const
-            {background, foreground} = config.init(),
+            {background, foreground} = scenes.init(),
             cmp = (a, b) => a.z - b.z,
             _this = this
 
@@ -48,7 +48,7 @@ export default class Layer extends PIXI.Container {
             display.rotation = item.rotation
             display.position.set(item.x, item.y)
             display.scale.set(item.scale.x, item.scale.y)
-            // item.drag && display.drag()
+            item.drag && display.drag()
             // display.drag()
 
             return display

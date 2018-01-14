@@ -1,138 +1,7 @@
+export default function() {
+    const {tree, depot, terrain, misc, paper} = global.resource
 
-
-export function init() {
-    const {tree, depot, terrain, misc} = global.resource
-
-    const background = [
-        {
-            texture: tree.textures['tree.5.png'],
-            alpha: .6,
-            x: 431,
-            y: 332,
-            z: -5,
-            scale: .8
-        },
-        {
-            texture: depot.textures['depot.11.png'],
-            x: 180,
-            y: 300
-        },
-        {
-            texture: tree.textures['tree.22.png'],
-            x: 660,
-            y: 257
-        },
-        {
-            texture: depot.textures['depot.3.png'],
-            x: 785,
-            y: 437
-        },
-        {
-            texture: tree.textures['tree.17.png'],
-            x: 694, y: 261,
-            alpha: .3,
-            z: -6
-        },
-        {
-            texture: tree.textures['tree.2.png'],
-            x: 776, y: 302,
-            alpha: .5,
-            z: -3
-        },
-        {
-            texture: tree.textures['tree.5.png'],
-            x: 944, y: 382,
-            alpha: .7,
-            scale: .8,
-            z: -3,
-        },
-        {
-            texture: tree.textures['tree.2.png'],
-            x: 1121, y: 361,
-            alpha: .8,
-            scale: .9,
-            z: -1,
-        },
-        {
-            texture: tree.textures['tree.14.png'],
-            x: 920, y: 363,
-            alpha: .6,
-            scale: .8,
-            z: -7,
-        },
-        {
-            texture: tree.textures['tree.20.png'],
-            x: 1104, y: 347,
-            alpha: .5,
-            scale: .7,
-            z: -8,
-        },
-        {
-            texture: tree.textures['tree.17.png'],
-            x: 1229, y: 289,
-            alpha: .4,
-            scale: .9,
-            z: -8,
-        },
-        {
-            texture: tree.textures['tree.1.png'],
-            x: 1334, y: 474,
-            z: -2
-        },
-        {
-            texture: tree.textures['tree.14.png'],
-            x: 1360, y: 344,
-            z: -5,
-            alpha: .6,
-            scale: .8,
-        },
-        {
-            texture: tree.textures['tree.14.png'],
-            x: 1942, y: 392,
-            z: -6,
-            alpha: .5,
-            scale: .7,
-        },
-        {
-            texture: terrain.textures['terrain.37.png'],
-            x: 2164, y: 574,
-            z: -2,
-            alpha: .8,
-        },
-        {
-            texture: tree.textures['tree.16.png'],
-            x: 2328, y: 614,
-            z: -1,
-            alpha: .8,
-        },
-        {
-            texture: tree.textures['tree.20.png'],
-            x: 2574, y: 222,
-            alpha: .8,
-        },
-        {
-            texture: tree.textures['tree.20.png'],
-            x: 2262, y: 368,
-            z: -6,
-            scale: .7,
-            alpha: .5,
-        },
-        {
-            texture: tree.textures['tree.18.png'],
-            x: 2802, y: 632,
-            z: -1,
-            scale: .9,
-        },
-        {
-            texture: terrain.textures['terrain.35.png'],
-            x: 2744, y: 516,
-            z: -6,
-            alpha: .7,
-            scale: .7,
-        },
-    ]
-
-    const foreground = [
+    return [
         {
             texture: tree.textures['tree.19.png'],
             x: 3295, y: 886,
@@ -340,9 +209,9 @@ export function init() {
 
         {
             texture: terrain.textures['terrain.5.png'],
-            x: 2799, y: 702,
+            x: 2775, y: 678,
             rotation: Math.PI / 5,
-            alpha: .6,
+            alpha: 1,
             scale: {x: .5, y: 1.2},
         },
 
@@ -392,7 +261,7 @@ export function init() {
         {
             texture: terrain.textures['terrain.46.png'],
             x: 5954, y: 868,
-            z: 1,
+            z: 3,
         },
         {
             texture: terrain.textures['terrain.33.png'],
@@ -419,6 +288,7 @@ export function init() {
             texture: terrain.textures['terrain.41.png'],
             x: 6064, y: 920,
             rotation: -Math.PI * .5,
+            z: 2
         },
         {
             texture: terrain.textures['terrain.4.png'],
@@ -457,29 +327,22 @@ export function init() {
             x: 2920, y: 827,
             z: -1
         },
+        {
+            texture: tree.textures['tree.16.png'],
+            x: 6077, y: 694,
+            z: 3,
+            scale: 1.3,
+        },
+        {
+            texture: terrain.textures['terrain.12.png'],
+            x: 6145, y: 707,
+            z: 2,
+        },
+        {
+            texture: terrain.textures['terrain.8.png'],
+            x: 6692, y: 726,
+            z: 2,
+            scale: {x: 2, y: 1},
+        },
     ]
-
-    format(background)
-    format(foreground)
-
-    return {background, foreground}
 }
-
-function format(arr) {
-    arr.forEach(item => {
-        !item.hasOwnProperty('alpha') ? item.alpha = 1 : null
-        !item.hasOwnProperty('rotation') ? item.rotation = 0 : null
-        !item.hasOwnProperty('z') ? item.z = 0 : null
-
-        if (!item.hasOwnProperty('scale')) {
-            item.scale = {x: 1, y: 1}
-        } else if (Number.isFinite(item.scale)) {
-            item.scale = {x: item.scale, y: item.scale}
-        }
-    })
-}
-
-export const path = [{"x":1401.1284194528878,"y":642},{"x":1907.9369300911858,"y":642},{"x":1946.3389941214896,"y":644.0522534291313},{"x":1984.7661659046375,"y":648.4088830829523},{"x":2026.500979751796,"y":655.3794905290658},{"x":2065.799477465709,"y":668.4493794905289},{"x":2106.952611124648,"y":673.8806164702273},{"x":2370.2860107421875,"y":700.4760131835938},{"x":2635.5437964520993,"y":711.5712610166264},{"x":2677.1267145656434,"y":713.7583278902678},{"x":2713.46374918354,"y":721.6002612671457},{"x":2758.772697583279,"y":732.9274983670803},{"x":2806.3800048828125,"y":743.515749123422},{"x":2864.203135205748,"y":752.0966688438928},{"x":2921.7713144652444,"y":759},{"x":6101.617320413921,"y":759}]
-
-path.push({x: 6101, y: 50})
-path.unshift({x: 1401, y: 50})
