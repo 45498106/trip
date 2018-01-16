@@ -1,5 +1,5 @@
 export default function() {
-    const {tree, depot, terrain, misc, paper} = global.resource
+    const {tree, depot, terrain, house, misc, paper} = global.resource
 
     return [
         {
@@ -30,7 +30,7 @@ export default function() {
             texture: depot.textures['depot.7.png'],
             x: 3489, y: 886,
         },
-        // 流水
+        /* 水流 */
         (function() {
             const
                 river = new PIXI.Container(),
@@ -344,5 +344,197 @@ export default function() {
             z: 2,
             scale: {x: 2, y: 1},
         },
+        {
+            texture: terrain.textures['terrain.46.png'],
+            x: 7129, y: 674,
+            z: 3,
+        },
+        {
+            texture: terrain.textures['terrain.12.png'],
+            x: 7114, y: 709,
+            z: 1,
+        },
+        {
+            texture: terrain.textures['terrain.12.png'],
+            x: 7114, y: 709,
+            z: 1,
+        },
+
+        (function() {
+            const
+                station = new PIXI.Sprite(misc.textures['misc.17.png']),
+                pillar = new PIXI.Sprite(house.textures['house.39.png']),
+                shed = new PIXI.Sprite(house.textures['house.28.png']),
+                bench = new PIXI.Sprite(house.textures['house.31.png']),
+                ratio = 1.5
+
+
+            station.addChild(pillar, bench, shed)
+
+            pillar.scale.set(1 / ratio)
+            shed.scale.set(1 / ratio)
+            bench.scale.set(1 / ratio)
+
+            shed.position.set(172, -110)
+            pillar.position.set(10, -88)
+            bench.position.set(242, -36)
+
+            return {
+                display: station,
+                x: 7638, y: 704,
+                scale: ratio,
+                z: -1,
+            }
+        })(),
+
+        {
+            texture: terrain.textures['terrain.12.png'],
+            x: 7740, y: 709,
+            z: 1,
+        },
+
+        {
+            texture: tree.textures['tree.13.png'],
+            x: 8352, y: 713,
+            z: 2,
+        },
+
+        {
+            texture: tree.textures['tree.11.png'],
+            x: 8382, y: 751,
+            z: 2,
+        },
+
+        {
+            texture: misc.textures['misc.16.png'],
+            x: 7198, y: 731,
+            z: 1,
+            scale: 1.5,
+        },
+
+        {
+            texture: terrain.textures['terrain.41.png'],
+            x: 8598, y: 723,
+            z: 3,
+            rotation: Math.PI * .45,
+        },
+
+        /* 下坡 */
+        {
+            texture: terrain.textures['terrain.43.png'],
+            x: 8591, y: 865,
+            z: 2,
+            scale: .8,
+        },
+        {
+            texture: terrain.textures['terrain.6.png'],
+            x: 8521, y: 905,
+            rotation: .09,
+            scale: 1.2,
+        },
+        {
+            texture: tree.textures['tree.18.png'],
+            x: 8531, y: 861,
+            z: 4,
+        },
+        {
+            texture: tree.textures['tree.18.png'],
+            x: 8586, y: 839,
+            z: 1,
+        },
+        {
+            texture: terrain.textures['terrain.4.png'],
+            x: 8557, y: 897,
+            z: 1,
+        },
+        {
+            texture: terrain.textures['terrain.46.png'],
+            x: 8693, y: 912,
+            z: 1,
+            scale: .8,
+            rotation: .09,
+        },
+        {
+            texture: terrain.textures['terrain.46.png'],
+            x: 8631, y: 868,
+            scale: .7,
+            alpha: .8,
+            rotation: .2,
+        },
+        {
+            texture: terrain.textures['terrain.5.png'],
+            x: 8731, y: 940,
+            rotation: .04,
+            z: -6,
+        },
+        {
+            texture: tree.textures['tree.21.png'],
+            x: 8893, y: 929,
+        },
+
+        /* 水流 */
+        (function() {
+            const
+                river = new PIXI.Container(),
+                width = 2800,
+                height = 53,
+                mask = new PIXI.Graphics()
+                    .beginFill(0xff9000)
+                    .drawRect(0, 0, width, height)
+                    .endFill()
+
+            river.mask = mask
+            river.addChild(
+                new PIXI.extras.TilingSprite(global.resource.water.texture, width, height),
+                new PIXI.extras.TilingSprite(global.resource.water.texture, width, height),
+                mask
+            )
+            river.children[0].x = 0
+            river.children[1].x = width
+            global.game.ticker.add(() => {
+                river.children[0].x -= .3
+                river.children[1].x -= .3
+                if (river.children[0].x < -width) river.children[0].x = river.children[1].x + width
+                if (river.children[1].x < -width) river.children[1].x = river.children[0].x + width
+            })
+
+            return {
+                display: river,
+                x: 8835, y: 966,
+                drag: true
+            }
+        })(),
+
+        /* 拱桥 */
+        {
+            texture: misc.textures['misc.19.png'],
+            x: 8578, y: 743,
+            z: -4,
+        },
+        {
+            texture: misc.textures['misc.19.png'],
+            x: 9087, y: 743,
+            z: -4,
+        },
+        {
+            texture: misc.textures['misc.19.png'],
+            x: 9596, y: 743,
+            z: -4,
+        },
+        {
+            texture: misc.textures['misc.19.png'],
+            x: 10105, y: 743,
+            z: -4,
+        },
+        {
+            texture: misc.textures['misc.19.png'],
+            x: 10614, y: 743,
+            z: -4,
+        },
+        {
+            texture: misc.textures['misc.19.png'],
+            x: 11123, y: 743,
+            z: -4,
+        }
     ]
 }

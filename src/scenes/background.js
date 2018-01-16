@@ -189,7 +189,35 @@ export default function() {
             texture: house.textures['house.36.png'],
             x: 7155, y: 685,
             z: 1,
-            drag:true
+        },
+        {
+            texture: terrain.textures['terrain.10.png'],
+            x: 7029, y: 694,
+            z: 2,
+        },
+        {
+            texture: tree.textures['tree.20.png'],
+            x: 7167, y: 354,
+            z: -2,
+            scale: .8,
+            alpha: .8,
+        },
+        {
+            texture: tree.textures['tree.20.png'],
+            x: 7228, y: 284,
+        },
+        {
+            texture: tree.textures['tree.18.png'],
+            x: 7563, y: 658,
+        },
+        {
+            texture: terrain.textures['terrain.46.png'],
+            x: 8085, y: 674,
+        },
+        {
+            texture: tree.textures['tree.18.png'],
+            x: 8269, y: 694,
+            z: -2
         },
     ]
 }

@@ -128,7 +128,7 @@ export default class Camera extends PIXI.Container {
                 }
 
                 case 40: {
-                    this.velocity.x = -this.speed
+                    this.velocity.y = -this.speed
 
                     break
                 }
