@@ -1,7 +1,7 @@
 global.util = {
     PI2: Math.PI * 2,
 
-    // 最好不要同时开启
+    // 不建议同时开启：road & scene
     debug: {
         scene: true,
         road: false,

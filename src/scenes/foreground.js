@@ -535,6 +535,32 @@ export default function() {
             texture: misc.textures['misc.19.png'],
             x: 11123, y: 743,
             z: -4,
+        },
+
+        {
+            texture: terrain.textures['terrain.43.png'],
+            x: 10450, y: 858,
+            z: -2,
+        },
+        {
+            texture: terrain.textures['terrain.46.png'],
+            x: 10488, y: 906,
+            z: -1,
+        },
+        {
+            texture: misc.textures['misc.20.png'],
+            x: 10500, y: 722,
+            z: -3,
+        },
+        {
+            texture: misc.textures['misc.2.png'],
+            x: 10506, y: 424,
+            z: -3,
+        },
+        {
+            texture: tree.textures['tree.18.png'],
+            x: 10632, y: 862,
+            z: -2,
         }
     ]
 }
