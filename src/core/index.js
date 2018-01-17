@@ -38,6 +38,7 @@ function loadRes() {
             .add('paper', `${prefix}/assets/sprites/paper.png?${hash}`)
             .add('water', `${prefix}/assets/sprites/water.png?${hash}`)
             .add('tram', `${prefix}/assets/sprites/tram.json?${hash}`)
+            .add('dock', `${prefix}/assets/sprites/dock.json?${hash}`)
             .add('terrain', `${prefix}/assets/sprites/terrain.json?${hash}`)
             .add('depot', `${prefix}/assets/sprites/depot.json?${hash}`)
             .add('tree', `${prefix}/assets/sprites/tree.json?${hash}`)

@@ -1,5 +1,5 @@
 export default function() {
-    const {tree, depot, terrain, house, misc, paper} = global.resource
+    const {tree, depot, terrain, house, dock, misc, paper} = global.resource
 
     return [
         {
@@ -60,7 +60,6 @@ export default function() {
                 display: river,
                 x: 3329, y: 940,
                 z: -3,
-                drag: true
             }
         })(),
         {
@@ -75,7 +74,6 @@ export default function() {
         {
             texture: depot.textures['depot.18.png'],
             x: 3372, y: 728,
-            drag: true
         },
         {
             texture: depot.textures['depot.2.png'],
@@ -277,12 +275,10 @@ export default function() {
             texture: tree.textures['tree.16.png'],
             x: 5940, y: 852,
             z: 2,
-            drag: true
         },
         {
             texture: tree.textures['tree.18.png'],
             x: 5858, y: 848,
-            drag: true
         },
         {
             texture: terrain.textures['terrain.41.png'],
@@ -296,7 +292,6 @@ export default function() {
             z: 2,
             scale: 2,
             alpha: .6,
-            drag: true
         },
         {
             texture: terrain.textures['terrain.6.png'],
@@ -501,7 +496,6 @@ export default function() {
             return {
                 display: river,
                 x: 8835, y: 966,
-                drag: true
             }
         })(),
 
@@ -561,6 +555,28 @@ export default function() {
             texture: tree.textures['tree.18.png'],
             x: 10632, y: 862,
             z: -2,
-        }
+        },
+
+        /* 晃动的船 */
+        (function() {
+            const
+                ship = new PIXI.Sprite(dock.textures['dock.5.png'])
+
+            let t = 0
+
+            ship.anchor.set(.5)
+            global.game.ticker.add(() => {
+                ship.y -= Math.sin(t) * .1
+                ship.rotation = Math.sin(t) * .03
+                t < global.util.PI2 ? t += .05 : t %= global.util.PI2
+            })
+
+            return {
+                display: ship,
+                x: 11325, y: 909,
+                z: -1,
+                drag: true
+            }
+        })(),
     ]
 }
