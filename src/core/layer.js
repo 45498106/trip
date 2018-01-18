@@ -26,14 +26,16 @@ export default class Layer extends PIXI.Container {
             cmp = (a, b) => a.z - b.z,
             _this = this
 
-        background.sort(cmp).forEach(item => {
+        global.sort(background, cmp).forEach(item => {
             const child = fit(item)
             child && this.layers[0].addChild(child)
         })
-        foreground.sort(cmp).forEach(item => {
+
+        global.sort(foreground, cmp).forEach(item => {
             const child = fit(item)
             child && this.layers[2].addChild(child)
         })
+
 
         function fit(item) {
             let display
