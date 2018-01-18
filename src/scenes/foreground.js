@@ -574,9 +574,38 @@ export default function() {
             return {
                 display: ship,
                 x: 11325, y: 909,
-                z: -1,
-                drag: true
+                z: -1
             }
         })(),
+
+        {
+            texture: dock.textures['dock.3.png'],
+            x: 11632, y: 803,
+            z: -2,
+            drag: true
+        },
+
+        /* 码头 */
+        (function() {
+            const
+                wharf = new PIXI.Sprite(dock.textures['dock.3.png'])
+
+            wharf.addChild(
+                new PIXI.Sprite(dock.textures['dock.7.png']).drag(),
+                new PIXI.Sprite(dock.textures['dock.9.png']).drag(),
+                new PIXI.Sprite(dock.textures['dock.6.png']).drag()
+            )
+            wharf.children[0].rotation = -Math.PI * .5
+            wharf.children[1].rotation = -2.5
+            wharf.children[0].position.set(-129, -82)
+            wharf.children[1].position.set(127, -45)
+            wharf.children[2].position.set(26, -148)
+
+            return {
+                display: wharf,
+                x: 11548, y: 896,
+                z: -1
+            }
+        })()
     ]
 }

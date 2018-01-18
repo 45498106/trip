@@ -49,6 +49,8 @@ PIXI.DisplayObject.prototype.drag = function() {
                 this.y = event.data.global.y / global.util.ratio + delta.y
             }
         })
+
+    return this
 }
 
 
