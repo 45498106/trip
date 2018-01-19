@@ -594,10 +594,13 @@ export default function() {
             x: 11707, y: 907,
             rotation: -.5,
             z: -2,
-            drag: true
         },
 
-
+        {
+            texture: depot.textures['depot.5.png'],
+            x: 11855, y: 821,
+            z: -2,
+        },
 
         /* 码头 */
         (function() {
@@ -611,6 +614,7 @@ export default function() {
                 new PIXI.Sprite(depot.textures['depot.9.png']),
                 new PIXI.Sprite(depot.textures['depot.9.png']),
                 new PIXI.Sprite(depot.textures['depot.9.png']),
+                new PIXI.Sprite(misc.textures['misc.7.png'])
             )
             wharf.children[0].rotation = -Math.PI * .5
             wharf.children[0].position.set(-129, -82)
@@ -621,15 +625,67 @@ export default function() {
             wharf.children[3].position.set(134, -46)
             wharf.children[4].scale.set(.8)
             wharf.children[4].rotation = Math.PI
-            wharf.children[4].position.set(208, 2)
+            wharf.children[4].position.set(208, 4)
             wharf.children[5].scale.set(.6)
             wharf.children[5].position.set(198, -34)
+            wharf.children[6].position.set(334, -52)
+            wharf.children[6].scale.set(2, 1.5)
 
             return {
                 display: wharf,
                 x: 11548, y: 896,
                 z: -1
             }
-        })()
+        })(),
+
+        {
+            texture: misc.textures['misc.16.png'],
+            x: 11778, y: 924,
+            scale: {x: .4, y: 2},
+            rotation: -.5,
+            z: -3,
+        },
+
+        {
+            texture: terrain.textures['terrain.1.png'],
+            x: 11956, y: 725,
+            z: -3,
+        },
+
+        {
+            texture: terrain.textures['terrain.1.png'],
+            x: 11696, y: 721,
+            z: -2,
+        },
+
+        {
+            texture: terrain.textures['terrain.5.png'],
+            x: 11994, y: 812,
+            z: -2,
+            rotation: -.05,
+        },
+
+        {
+            texture: terrain.textures['terrain.5.png'],
+            x: 11963, y: 893,
+            z: -2,
+            alpha: .6,
+            rotation: -.2,
+        },
+
+        {
+            texture: terrain.textures['terrain.46.png'],
+            x: 11901, y: 888,
+            rotation: -.4,
+            alpha: .8,
+            z: -2,
+        },
+
+        {
+            texture: tree.textures['tree.20.png'],
+            x: 12021, y: 368,
+            z: -2,
+            drag: true
+        },
     ]
 }

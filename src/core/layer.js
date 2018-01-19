@@ -67,7 +67,7 @@ export default class Layer extends PIXI.Container {
                 if (child.config && !child.config.drag) {
                     const point = child.getGlobalPosition()
                     child.x = child.config.x + (hw - point.x) *
-                        (child.config.z < 0 ? Math.exp(25 / child.config.z) : 0)
+                        (child.config.z < 0 ? Math.exp(20 / child.config.z) : 0)
                 }
             })
         })

@@ -1,5 +1,5 @@
 export default function() {
-    const {tree, depot, terrain, misc, paper, house} = global.resource
+    const {tree, depot, terrain, dock, misc, paper, house} = global.resource
 
     return [
         {
@@ -198,7 +198,7 @@ export default function() {
         {
             texture: tree.textures['tree.20.png'],
             x: 7167, y: 354,
-            z: -2,
+            z: -5,
             scale: .8,
             alpha: .8,
         },
@@ -218,6 +218,36 @@ export default function() {
             texture: tree.textures['tree.18.png'],
             x: 8269, y: 694,
             z: -2
+        },
+        {
+            texture: house.textures['house.36.png'],
+            x: 11967, y: 691,
+        },
+        {
+            texture: house.textures['house.36.png'],
+            x: 12096, y: 693,
+        },
+        {
+            texture: dock.textures['dock.8.png'],
+            x: 11621, y: 389,
+        },
+        {
+            texture: dock.textures['dock.1.png'],
+            x: 12177, y: 445,
+        },
+        {
+            texture: tree.textures['tree.20.png'],
+            x: 11977, y: 397,
+            alpha: .8,
+            scale: .8,
+            z: -6,
+        },
+        {
+            texture: house.textures['house.40.png'],
+            x: 12076, y: 639,
+            scale: .7,
+            alpha: .9,
+            z: -6,
         },
     ]
 }
