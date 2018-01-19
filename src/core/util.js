@@ -29,15 +29,16 @@ global.util = {
 }
 
 PIXI.DisplayObject.prototype.drag = function() {
-    let delta = {}, down = false
+    let down = false,
+        delta
 
     this.interactive = true
+
     this
         .on('pointerdown', event => {
-            event.stopPropagation()
             down = true
-            delta.x = this.x - event.data.global.x / global.util.ratio
-            delta.y = this.y - event.data.global.y / global.util.ratio
+            delta = event.data.getLocalPosition(this)
+            event.stopPropagation()
         })
         .on('pointerup', () => {
             down = false
@@ -45,8 +46,9 @@ PIXI.DisplayObject.prototype.drag = function() {
         })
         .on('pointermove', event => {
             if (down) {
-                this.x = event.data.global.x / global.util.ratio + delta.x
-                this.y = event.data.global.y / global.util.ratio + delta.y
+                const point = event.data.getLocalPosition(this)
+                this.x += point.x - delta.x
+                this.y += point.y - delta.y
             }
         })
 
