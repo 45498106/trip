@@ -577,13 +577,27 @@ export default function() {
                 z: -1
             }
         })(),
-
+        {
+            texture: dock.textures['dock.3.png'],
+            x: 11629, y: 743,
+            z: -2,
+        },
         {
             texture: dock.textures['dock.3.png'],
             x: 11632, y: 803,
             z: -2,
+        },
+
+
+        {
+            texture: depot.textures['depot.5.png'],
+            x: 11707, y: 907,
+            rotation: -.5,
+            z: -2,
             drag: true
         },
+
+
 
         /* 码头 */
         (function() {
@@ -591,15 +605,25 @@ export default function() {
                 wharf = new PIXI.Sprite(dock.textures['dock.3.png'])
 
             wharf.addChild(
-                new PIXI.Sprite(dock.textures['dock.7.png']).drag(),
-                new PIXI.Sprite(dock.textures['dock.9.png']).drag(),
-                new PIXI.Sprite(dock.textures['dock.6.png']).drag()
+                new PIXI.Sprite(dock.textures['dock.7.png']),
+                new PIXI.Sprite(dock.textures['dock.9.png']),
+                new PIXI.Sprite(dock.textures['dock.6.png']),
+                new PIXI.Sprite(depot.textures['depot.9.png']),
+                new PIXI.Sprite(depot.textures['depot.9.png']),
+                new PIXI.Sprite(depot.textures['depot.9.png']),
             )
             wharf.children[0].rotation = -Math.PI * .5
-            wharf.children[1].rotation = -2.5
             wharf.children[0].position.set(-129, -82)
+            wharf.children[1].rotation = -2.5
             wharf.children[1].position.set(127, -45)
             wharf.children[2].position.set(26, -148)
+            wharf.children[3].scale.set(.8)
+            wharf.children[3].position.set(134, -46)
+            wharf.children[4].scale.set(.8)
+            wharf.children[4].rotation = Math.PI
+            wharf.children[4].position.set(208, 2)
+            wharf.children[5].scale.set(.6)
+            wharf.children[5].position.set(198, -34)
 
             return {
                 display: wharf,
