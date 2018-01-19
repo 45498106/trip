@@ -659,6 +659,12 @@ export default function() {
         },
 
         {
+            texture: terrain.textures['terrain.1.png'],
+            x: 12050, y: 755,
+            z: -4,
+        },
+
+        {
             texture: terrain.textures['terrain.5.png'],
             x: 11994, y: 812,
             z: -2,
@@ -671,6 +677,13 @@ export default function() {
             z: -2,
             alpha: .6,
             rotation: -.2,
+        },
+        {
+            texture: terrain.textures['terrain.5.png'],
+            x: 12262, y: 809,
+            z: -2,
+            alpha: .6,
+            rotation: -.1,
         },
 
         {
@@ -685,7 +698,25 @@ export default function() {
             texture: tree.textures['tree.20.png'],
             x: 12021, y: 368,
             z: -2,
-            drag: true
         },
+
+        {
+            texture: terrain.textures['terrain.1.png'],
+            x: 12296, y: 728,
+        },
+        {
+            texture: terrain.textures['terrain.12.png'],
+            x: 12632, y: 723,
+        },
+        {
+            texture: misc.textures['misc.16.png'],
+            x: 12407, y: 782,
+            z: -4,
+            alpha: .6,
+        },
+        {
+            texture: tree.textures['tree.20.png'],
+            x: 13082, y: 292,
+        }
     ]
 }

@@ -23,7 +23,7 @@ loadRes().then(() => {
     global.camera.addChild(global.layer)
 
     if (global.util.debug.camera) {
-        global.camera.position.set(-11340, -324)
+        global.camera.position.set(-12340, -324)
         global.camera.listen()
     } else {
         global.camera.follow(global.tram.body)

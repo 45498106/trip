@@ -249,5 +249,64 @@ export default function() {
             alpha: .9,
             z: -6,
         },
+        {
+            texture: house.textures['house.19.png'],
+            x: 12839, y: 553,
+            z: -2,
+        },
+        {
+            texture: house.textures['house.11.png'],
+            x: 12636, y: 555,
+            z: -2,
+        },
+        (function() {
+            const box = new PIXI.Sprite(house.textures['house.23.png'])
+            box.addChild(new PIXI.Sprite(house.textures['house.41.png']))
+            box.children[0].position.set(43, -33)
+            return {
+                display: box,
+                x: 12825, y: 565,
+                alpha: .7,
+                z: -4,
+            }
+        })(),
+        {
+            texture: house.textures['house.26.png'],
+            x: 12932, y: 660,
+        },
+        {
+            texture: house.textures['house.26.png'],
+            x: 12641, y: 660,
+        },
+        {
+            texture: house.textures['house.26.png'],
+            x: 12835, y: 660,
+        },
+        {
+            texture: misc.textures['misc.8.png'],
+            x: 12798, y: 707,
+        },
+        {
+            texture: misc.textures['misc.7.png'],
+            x: 12999, y: 707,
+        },
+        {
+            texture: misc.textures['misc.7.png'],
+            x: 13042, y: 712,
+            rotation: .1,
+        },
+        {
+            texture: tree.textures['tree.17.png'],
+            x: 12608, y: 264,
+            z: -6,
+            alpha: .8,
+        },
+        {
+            texture: tree.textures['tree.20.png'],
+            x: 12783, y: 386,
+            z: -5,
+            scale: .8,
+            alpha: .8,
+        }
     ]
 }
